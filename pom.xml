@@ -6,11 +6,20 @@
 
     <groupId>org.domain_name.java_assignment</groupId>
     <artifactId>java_assignment</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging> <!-- This just means that it'll be build into a jar file  i.e. java_assignment-1.0-SNAPSHOT.jar -->
+    <name>java_assigment</name>
+    <description>General Description for this project</description>
+    <parent>
+        <!-- This starter is needed as it contains many useful jars which you can add to your project -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+    </parent>
 
     <dependencies>
         <dependency>
-            <!-- This dependency is if you want to write rest end point -->
+            <!-- This dependency is used if you want to write rest end point -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
