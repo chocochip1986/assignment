@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 public class User{
     private static final String MAX_SALARY = "999999.99";
 
-    @Column(name = "employee_id")
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employees_seq")
     @SequenceGenerator(name = "employees_seq", sequenceName = "employees_seq", initialValue = 10000, allocationSize = 1)

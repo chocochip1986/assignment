@@ -3,6 +3,7 @@ package application.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -19,5 +20,11 @@ public class UserController
     public List<User> get_users()
     {
         return userService.find_all_users();
+    }
+
+    @RequestMapping(value = "/user/{id}", method = GET)
+    public Optional<User> get_user(@PathVariable("id") Integer id)
+    {
+        return userService.find_by(id);
     }
 }
