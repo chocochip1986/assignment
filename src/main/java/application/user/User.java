@@ -14,6 +14,7 @@ public class User{
     @SequenceGenerator(name = "employees_seq", sequenceName = "employees_seq", initialValue = 10000, allocationSize = 1)
     private Integer employee_id;
 
+    @NotBlank
     @Size(min = 1, max = 50, message = "Name of user cannot be more than 50 characters or lesser than 1 character!")
     @Column(name = "name", nullable = false, length = 50)
     private String name;
