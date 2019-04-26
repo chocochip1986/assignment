@@ -21,8 +21,9 @@ public class UserService
         return this.userDao.findById(employee_id);
     }
 
-    public void create(String name, double salary)
+    public User create(String name, double salary)
     {
-        
+        User user = new User(name, salary);
+        return userDao.save(user);
     }
 }

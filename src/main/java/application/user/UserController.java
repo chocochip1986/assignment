@@ -1,6 +1,8 @@
 package application.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +34,20 @@ public class UserController
 
     //Post method to create a user record i.e. /user?name=afafa
     @RequestMapping(value = "/user", method = POST)
-    public void create_user(@RequestParam(required = true, name = "name") String name, @RequestParam(required = true, name = "salary") double salary)
+    public ResponseEntity<String> create_user(@RequestParam(required = true, name = "name") String name, @RequestParam(required = true, name = "salary") double salary)
     {
         System.out.println("Creating entry in User table => "+name+" "+Double.toString(salary));
+        try
+        {
+            userService.create(name, salary);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error in creating user record in db!");
+            System.out.println("Error: "+e.getClass()+" "+e.getMessage());
+            return new ResponseEntity<>("Error!", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("GOOD!", HttpStatus.OK);
     }
 
 
