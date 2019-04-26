@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "tbl_test")
 public class User{
     private static final String MAX_SALARY = "999999.99";
 
@@ -12,7 +12,7 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employees_seq")
     @SequenceGenerator(name = "employees_seq", sequenceName = "employees_seq", initialValue = 10000, allocationSize = 1)
-    private Integer employee_id;
+    private Integer id;
 
     @NotBlank
     @Size(min = 1, max = 50, message = "Name of user cannot be more than 50 characters or lesser than 1 character!")
