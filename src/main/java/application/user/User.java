@@ -10,8 +10,8 @@ public class User{
 
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employees_seq")
-    @SequenceGenerator(name = "employees_seq", sequenceName = "employees_seq", initialValue = 10000, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "tbl_test_seq")
+    @SequenceGenerator(name = "tbl_test_seq", sequenceName = "tbl_test_seq", initialValue = 10000, allocationSize = 1)
     private Integer id;
 
     @NotBlank
