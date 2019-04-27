@@ -11,14 +11,20 @@ public class UserService
     @Autowired
     UserDao userDao;
 
+    public List<User> find_all_users(double min_salary, double max_salary)
+    {
+        return this.userDao.findBySalaryBetween(min_salary, max_salary);
+    }
+
     public List<User> find_all_users()
     {
         return this.userDao.findAll();
     }
 
-    public Optional<User> find_by(Integer employee_id)
+    public User find_by(Integer employee_id)
     {
-        return this.userDao.findById(employee_id);
+        Optional<User> optionalUserEntity = this.userDao.findById(employee_id);
+        return optionalUserEntity.get();
     }
 
     public User create(String name, double salary)

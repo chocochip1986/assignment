@@ -19,7 +19,7 @@ public class User{
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Positive
+
     @DecimalMax(value = MAX_SALARY, message = "salary cannot be more than "+MAX_SALARY)
     @Column(name = "salary", nullable = false, precision = 8, scale = 2)
     private double salary;

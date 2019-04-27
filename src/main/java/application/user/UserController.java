@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -15,21 +15,30 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 public class UserController
 {
+    private final double min_salary = 0;
+    private final double max_salary = 4000;
+
     @Autowired
     UserService userService;
 
     //Request mappings associates a function with a path, http params, headers etc.
     @RequestMapping(value = "/users", method = GET)
-    public List<User> get_users()
+    public Map<String, List<User>> get_users()
     {
-        return userService.find_all_users();
+        Map<String, List<User>> response = new HashMap<String, List<User>>();
+        response.put("results", userService.find_all_users(min_salary, max_salary));
+        return response;
     }
 
     //Get method to retrieve one user record
     @RequestMapping(value = "/user/{id}", method = GET)
-    public Optional<User> get_user(@RequestParam(required = false ) @PathVariable("id") Integer id)
+    public Map<String, List<User>> get_user(@RequestParam(required = false ) @PathVariable("id") Integer id)
     {
-        return userService.find_by(id);
+        Map<String,List<User>> response = new HashMap<String, List<User>>();
+        List<User> users = new ArrayList<User>();
+        users.add(userService.find_by(id));
+        response.put("results", users);
+        return response;
     }
 
     //Post method to create a user record i.e. /user?name=afafa
@@ -49,6 +58,4 @@ public class UserController
         }
         return new ResponseEntity<>("GOOD!", HttpStatus.OK);
     }
-
-
 }
