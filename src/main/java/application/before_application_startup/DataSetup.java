@@ -12,14 +12,14 @@ import java.util.List;
 public class DataSetup
 {
     @Autowired
-    CsvFileReader<User> fileReader;
+    CsvFileReader fileReader;
 
     @Autowired
     UserDao userDao;
 
     public void setupData()
     {
-        List<User> list_of_users = fileReader.read_csv_file( "data.csv" );
+        List<User> list_of_users = fileReader.read_csv_file( User.class, "data.csv" );
         System.out.println("Number of users to save: "+list_of_users.size());
         userDao.saveAll(list_of_users);
     }
