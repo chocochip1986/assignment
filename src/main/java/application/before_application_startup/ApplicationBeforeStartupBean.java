@@ -13,6 +13,5 @@ public class ApplicationBeforeStartupBean implements CommandLineRunner
     public void run(String... args) throws Exception {
         System.out.println("Loading data into db");
         dataSetup.setupData();
-        //TODO insert into database
     }
 }
