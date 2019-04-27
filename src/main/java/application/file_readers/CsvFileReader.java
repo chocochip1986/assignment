@@ -16,45 +16,11 @@ public class CsvFileReader
 {
     public <T> List<T> read_csv_file(Class<T> klass, String file_name)
     {
-        File data_file;
-        try
-        {
-            data_file = ResourceUtils.getFile("classpath:data.csv");
-        }
-         catch (Exception e)
-         {
-             System.out.println("Something wrong trying to read the file!");
-             return null;
-         }
+        File data_file = get_data_file_from_resource_dir(file_name);
+        BufferedReader file_reader = read_file(data_file);
 
-        if ( !data_file.exists() )
-        {
-            System.out.println("File "+file_name+" does not exists!");
-            return null;
-        }
-        BufferedReader file_reader;
-        try
-        {
-            file_reader = new BufferedReader(new FileReader(data_file.getPath()));
-        }
-        catch (Exception e)
-        {
-            System.out.println("Unable to read file! "+e.getMessage());
-            return null;
-        }
         CsvMapper csv_mapper = new CsvMapper();
-        CsvSchema csv_schema;
-
-        try
-        {
-            System.out.println("Building schema for User");
-            csv_schema = csv_mapper.schemaFor(klass).withColumnSeparator(';');
-        }
-        catch (Exception e)
-        {
-            System.out.println("Unable to find class "+klass.toString());
-            return null;
-        }
+        CsvSchema csv_schema = generate_csv_schema_for(klass, csv_mapper);
 
         ObjectReader reader = csv_mapper.reader(klass).with(csv_schema);
         try
@@ -68,5 +34,56 @@ public class CsvFileReader
             System.out.println("Unable to parse values csv file into iterator: "+e.getMessage());
             return null;
         }
+    }
+
+    private CsvSchema generate_csv_schema_for(Class klass, CsvMapper csv_mapper)
+    {
+        try
+        {
+            return csv_mapper.schemaFor(klass).withColumnSeparator(';');
+        }
+        catch (Exception e)
+        {
+            System.out.println("Unable to build schema for"+klass.toString());
+        }
+        return null;
+    }
+
+    private BufferedReader read_file(File data_file)
+    {
+        try
+        {
+            return new BufferedReader(new FileReader(data_file.getPath()));
+        }
+        catch ( FileNotFoundException e )
+        {
+            System.out.println("File "+data_file.getPath()+" not found!!");
+            System.out.println(e.getMessage());
+        }
+        catch ( Exception e )
+        {
+            System.out.println("Someting went wrong!");
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private File get_data_file_from_resource_dir(String file_path)
+    {
+        try
+        {
+            return ResourceUtils.getFile("classpath:"+file_path);
+        }
+        catch ( FileNotFoundException e )
+        {
+            System.out.println("The File "+file_path+" not found!!");
+            System.out.println(e.getMessage());
+        }
+        catch ( Exception e )
+        {
+            System.out.println("There is someting went wrong!");
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
